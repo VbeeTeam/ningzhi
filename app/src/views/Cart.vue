@@ -2,7 +2,6 @@
   <div class="cart wrap">
     <div class="cart-body">
       <van-checkbox-group
-        @change="groupChange"
         v-model="result"
         ref="checkboxGroup"
       >
@@ -12,7 +11,7 @@
           :key="index"
         >
           <div class="good-item">
-            <van-checkbox :name="item.goodsId" />
+            <van-checkbox :name="item.goodsId" @click="groupchange"/>
             <div class="good-img"><img :src="item.goodsCoverImg" alt="" /></div>
             <div class="good-desc">
               <div class="good-title">
@@ -79,11 +78,16 @@ export default {
   },
   methods: {
     //绑定的复选框发生改变
-    groupChange(result) {
-      if (result.length == this.list.length) {
-        this.checkAll = true;
-      } else {
-        this.checkAll = false;
+    groupChange() {
+      let newList = this.list.filter((it) => {
+        return this.result.includes(it.goodsId);
+      });
+       console.log(this.list.length)
+      console.log(newList.length);
+      if(this.list.length == newList.length){
+        this.checkAll =true
+      }else{
+        this.checkAll =false
       }
     },
     //全选、反选
